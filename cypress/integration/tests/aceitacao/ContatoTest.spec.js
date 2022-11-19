@@ -50,7 +50,7 @@ context("Contato", () => {
     });
   });
 
-  it("GET - Teste listar contatos", () => {
+  /*  it("GET - Teste listar contatos", () => {
     cy.listaContatos().should((response) => {
       expect(response.status).to.eq(200);
     });
@@ -70,5 +70,5 @@ context("Contato", () => {
       );
       cy.deletarPessoa(pessoa.body.idPessoa);
     });
-  });
+  }); */
 });
