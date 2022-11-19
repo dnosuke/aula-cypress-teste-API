@@ -5,6 +5,10 @@ import atualizaEnderecoPayload from "../../../fixtures/atualizaEndereco.payload.
 
 context("Endereco", () => {
   it("GET - Teste listar endereco por idEndereco", () => {
+    cy.allure()
+      .epic("Endereco")
+      .feature("listar endereco por idEndereco")
+      .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarEndereco(pessoa.body.idPessoa, addEnderecoPayload).then(
         (endereco) => {
@@ -22,6 +26,10 @@ context("Endereco", () => {
   });
 
   it("GET - Teste listar endereco por país", () => {
+    cy.allure()
+    .epic("Endereco")
+    .feature("listar endereco por país")
+    .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarEndereco(pessoa.body.idPessoa, addEnderecoPayload).then(
         (endereco) => {
@@ -39,6 +47,10 @@ context("Endereco", () => {
   it("GET - Teste listar enderecos por pagina", () => {
     const pagina = 0;
     const tamanho = 20;
+    cy.allure()
+    .epic("Endereco")
+    .feature("listar endereco por pagina")
+    .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarEndereco(pessoa.body.idPessoa, addEnderecoPayload).then(
         (endereco) => {
@@ -54,6 +66,10 @@ context("Endereco", () => {
   });
 
   it("GET - Teste listar endereco por idPessoa", () => {
+    cy.allure()
+    .epic("Endereco")
+    .feature("listar endereco por idPessoa")
+    .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarEndereco(pessoa.body.idPessoa, addEnderecoPayload).then(
         (endereco) => {
@@ -73,6 +89,10 @@ context("Endereco", () => {
   });
 
   it("DELETE - Teste deletar endereco por idEndereco", () => {
+    cy.allure()
+    .epic("Endereco")
+    .feature("deletar endereco por idEndereco")
+    .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarEndereco(pessoa.body.idPessoa, addEnderecoPayload).then(
         (endereco) => {
@@ -86,6 +106,10 @@ context("Endereco", () => {
   });
 
   it("POST - Teste adicionar endereco com sucesso", () => {
+    cy.allure()
+    .epic("Endereco")
+    .feature("adicionar endereco")
+    .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarEndereco(pessoa.body.idPessoa, addEnderecoPayload).then(
         (endereco) => {

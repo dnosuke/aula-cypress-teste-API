@@ -5,6 +5,10 @@ import atualizaPayload from "../../../fixtures/atualizaContato.payload.json";
 
 context("Contato", () => {
   it("POST - Teste adicionar contato", () => {
+    cy.allure()
+      .epic("Contato")
+      .feature("adicionar contato")
+      .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.wrap(pessoa.body).as("add");
     });
@@ -21,6 +25,10 @@ context("Contato", () => {
   });
 
   it("DELETE - Teste deletar contato", () => {
+    cy.allure()
+      .epic("Contato")
+      .feature("deletar contato")
+      .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarContato(pessoa.body.idPessoa, contatoPayload).then(
         (contato) => {
@@ -34,6 +42,10 @@ context("Contato", () => {
   });
 
   it("PUT - Teste atualizar contato", () => {
+    cy.allure()
+      .epic("Contato")
+      .feature("atualizar contato")
+      .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarContato(pessoa.body.idPessoa, contatoPayload).then(
         (contato) => {
@@ -51,12 +63,20 @@ context("Contato", () => {
   });
 
   it("GET - Teste listar contatos", () => {
+    cy.allure()
+      .epic("Contato")
+      .feature("listar contatos")
+      .story("Dados válidos");
     cy.listaContatos().should((response) => {
       expect(response.status).to.eq(200);
     });
   });
 
   it("GET - Teste listar contato por idPessoa", () => {
+    cy.allure()
+      .epic("Contato")
+      .feature("listar contato por idPessoa")
+      .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.adicionarContato(pessoa.body.idPessoa, contatoPayload).then(
         (contato) => {
