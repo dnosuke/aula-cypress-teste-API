@@ -2,6 +2,8 @@
 import "cypress-localstorage-commands";
 
 const userPayload = require("../../../fixtures/addUser.payload.json");
+const enderecoPayload = require("../../../fixtures/addEndereco.payload.json");
+const contatoPayload = require("../../../fixtures/addContato.payload.json");
 
 context("Pessoa", () => {
   it("POST - Teste adicionar pessoa", () => {
@@ -15,12 +17,9 @@ context("Pessoa", () => {
         expect(response.body.nome).to.eq("Alain");
         expect(response.body.email).to.eq("batman@gmail.com");
       })
-      .then((response) => {
-        cy.wrap(response.body).as("add");
+      .then((pessoa) => {
+        cy.deletarPessoa(pessoa.body.idPessoa);
       });
-    cy.get("@add").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa);
-    });
   });
 
   it("GET - Teste listar pessoa pelo nome ", () => {
@@ -28,47 +27,56 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("listar pessoa pelo nome")
       .story("Dados válidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("nome");
-    });
-    cy.get("@nome").then((pessoa) => {
-      cy.listarPessoaPeloNome(pessoa.nome).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.listarPessoaPeloNome(pessoa.body.nome).should((response) => {
         expect(response.status).to.eq(200);
       });
-      cy.deletarPessoa(pessoa.idPessoa);
+      cy.deletarPessoa(pessoa.body.idPessoa);
     });
   });
 
   it("GET - Teste listar relatorio ", () => {
-    const idPessoa = 4;
     cy.allure()
       .epic("Pessoa")
       .feature("listar relatorio")
       .story("Dados válidos");
-    cy.listarRelatorio(idPessoa).should((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body[0].idPessoa).to.eq(4);
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.listarRelatorio(pessoa.body.idPessoa).should((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body[0].idPessoa).to.eq(pessoa.body.idPessoa);
+      });
+      cy.deletarPessoa(pessoa.body.idPessoa);
     });
   });
 
   it("GET - Teste lista completa", () => {
-    const idPessoa = 4;
     cy.allure().epic("Pessoa").feature("lista completa").story("Dados válidos");
-    cy.listaCompleta(idPessoa).should((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body[0].idPessoa).to.eq(4);
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.listaCompleta(pessoa.body.idPessoa).should((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body[0].idPessoa).to.eq(pessoa.body.idPessoa);
+      });
+      cy.deletarPessoa(pessoa.body.idPessoa);
     });
   });
 
   it("GET - Teste lista com enderecos", () => {
-    const idPessoa = 4;
     cy.allure()
       .epic("Pessoa")
       .feature("lista com enderecos")
       .story("Dados válidos");
-    cy.listaEnderecos(idPessoa).should((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body[0].enderecos).that.is.not.empty;
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.adicionarEndereco(pessoa.body.idPessoa, enderecoPayload).then(
+        (endereco) => {
+          cy.listaEnderecos(pessoa.body.idPessoa).should((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body[0].enderecos).that.is.not.empty;
+            expect(response.body[0].enderecos[0].pais).to.eq("Brasil");
+          });
+          cy.deletarEndereco(endereco.body.idEndereco);
+        }
+      );
+      cy.deletarPessoa(pessoa.body.idPessoa);
     });
   });
 
@@ -84,14 +92,23 @@ context("Pessoa", () => {
   });
 
   it("GET - Teste lista com contatos", () => {
-    const idPessoa = 4;
     cy.allure()
       .epic("Pessoa")
       .feature("lista com contatos")
       .story("Dados válidos");
-    cy.listaContatos(idPessoa).should((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body[0].contatos).that.is.not.empty;
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.adicionarContato(pessoa.body.idPessoa, contatoPayload).then(
+        (contato) => {
+          cy.listaContatosPessoa(pessoa.body.idPessoa).should((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body[0].contatos[0].idContato).to.eq(
+              contato.body.idContato
+            );
+          });
+          cy.deletarContato(contato.body.idContato);
+        }
+      );
+      cy.deletarPessoa(pessoa.body.idPessoa);
     });
   });
 
@@ -100,7 +117,7 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("lista com contatos sem passar idPessoa")
       .story("Dados válidos");
-    cy.listaContatos().should((response) => {
+    cy.listaContatosPessoa().should((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).that.is.not.empty;
     });
@@ -108,11 +125,8 @@ context("Pessoa", () => {
 
   it("DELETE - Teste deletar pessoa", () => {
     cy.allure().epic("Pessoa").feature("deletar pessoa").story("Dados válidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("delete");
-    });
-    cy.get("@delete").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.deletarPessoa(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(200);
       });
     });
@@ -123,16 +137,13 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("atualizar pessoa")
       .story("Dados válidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("pessoaATT");
-    });
-    cy.get("@pessoaATT").then((pessoa) => {
-      cy.atualizarPessoa(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.atualizarPessoa(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.nome).to.eq("Delon");
         expect(response.body.email).to.eq("superman@dbccompany.com.br");
       });
-      cy.deletarPessoa(pessoa.idPessoa);
+      cy.deletarPessoa(pessoa.body.idPessoa);
     });
   });
 
@@ -183,12 +194,9 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("deletar pessoa")
       .story("Dados inválidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("delete");
-    });
-    cy.get("@delete").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa);
-      cy.deletarPessoa(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.deletarPessoa(pessoa.body.idPessoa);
+      cy.deletarPessoa(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(404);
         expect(response.body.message).to.eq("ID da pessoa nao encontrada");
       });
@@ -200,12 +208,9 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("atualizar pessoa")
       .story("Dados inválidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("pessoaATT");
-    });
-    cy.get("@pessoaATT").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa);
-      cy.atualizarPessoa(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.deletarPessoa(pessoa.body.idPessoa);
+      cy.atualizarPessoa(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(404);
         expect(response.body.message).to.eq("ID da pessoa nao encontrada");
       });
@@ -217,12 +222,9 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("listar relatorio")
       .story("Dados inválidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("pessoa");
-    });
-    cy.get("@pessoa").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa);
-      cy.listarRelatorio(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.deletarPessoa(pessoa.body.idPessoa);
+      cy.listarRelatorio(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).that.is.empty;
       });
@@ -234,12 +236,9 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("lista completa")
       .story("Dados inválidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("pessoa");
-    });
-    cy.get("@pessoa").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa);
-      cy.listaCompleta(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.deletarPessoa(pessoa.body.idPessoa);
+      cy.listaCompleta(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).that.is.empty;
       });
@@ -251,12 +250,9 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("lista de enderecos")
       .story("Dados inválidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("pessoa");
-    });
-    cy.get("@pessoa").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa);
-      cy.listaEnderecos(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.deletarPessoa(pessoa.body.idPessoa);
+      cy.listaEnderecos(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(404);
         expect(response.body.message).to.eq("ID da pessoa nao encontrada");
       });
@@ -268,14 +264,11 @@ context("Pessoa", () => {
       .epic("Pessoa")
       .feature("lista com contatos")
       .story("Dados inválidos");
-    cy.adicionarPessoa(userPayload).then((response) => {
-      cy.wrap(response.body).as("pessoa");
-    });
-    cy.get("@pessoa").then((pessoa) => {
-      cy.deletarPessoa(pessoa.idPessoa);
-      cy.listaContatos(pessoa.idPessoa).should((response) => {
+    cy.adicionarPessoa(userPayload).then((pessoa) => {
+      cy.deletarPessoa(pessoa.body.idPessoa);
+      cy.listaContatosPessoa(pessoa.body.idPessoa).should((response) => {
         expect(response.status).to.eq(404);
-        expect(response.body.message).to.eq("ID da pessoa nao encontrada");
+        expect(response.body).that.is.not.empty;
       });
     });
   });

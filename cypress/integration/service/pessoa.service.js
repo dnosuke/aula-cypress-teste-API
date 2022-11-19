@@ -1,4 +1,3 @@
-import Ajv from "ajv";
 import { token } from "../../support/commands";
 
 const API_BASE = Cypress.env("API_BASE");
@@ -136,7 +135,7 @@ Cypress.Commands.add("listaEnderecos", (_idPessoa) => {
     .get("@response");
 });
 
-Cypress.Commands.add("listaContatos", (_idPessoa) => {
+Cypress.Commands.add("listaContatosPessoa", (_idPessoa) => {
   cy.request({
     method: "GET",
     url: `${API_BASE}pessoa/lista-com-contatos`,
