@@ -197,24 +197,24 @@ export default class Contrato {
     });
   }
 
-  contratoListarRelatorio(contrato) {
-    cy.listarRelatorio(4).then((response) => {
+  contratoListarRelatorio(contrato, idPessoa) {
+    cy.listarRelatorio(idPessoa).then((response) => {
       cy.validaContrato(contrato, response);
     });
   }
-  contratoListarCompleta(contrato) {
-    cy.listaCompleta(4).then((response) => {
+  contratoListarCompleta(contrato, idPessoa) {
+    cy.listaCompleta(idPessoa).then((response) => {
       cy.validaContrato(contrato, response);
     });
   }
 
-  contratoListarContatos(contrato) {
-    cy.listaContatos(4).then((response) => {
+  contratoListarContatos(contrato, idPessoa) {
+    cy.listaContatosPessoa(idPessoa).then((response) => {
       cy.validaContrato(contrato, response);
     });
   }
-  contratoListaEnderecos(contrato) {
-    cy.listaEnderecos(4).then((response) => {
+  contratoListaEnderecos(contrato, idPessoa) {
+    cy.listaEnderecos(idPessoa).then((response) => {
       cy.validaContrato(contrato, response);
     });
   }

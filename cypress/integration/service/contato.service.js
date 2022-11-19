@@ -80,8 +80,8 @@ export default class ContatoContrato {
       cy.validaContrato(contrato, response);
     });
   }
-  contratoListaContatoPorId(contrato) {
-    cy.listaContatoPorId(893).then((response) => {
+  contratoListaContatoPorId(contrato, idContato) {
+    cy.listaContatoPorId(idContato).then((response) => {
       cy.validaContrato(contrato, response);
     });
   }

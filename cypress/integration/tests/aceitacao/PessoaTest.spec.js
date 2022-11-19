@@ -25,7 +25,7 @@ context("Pessoa", () => {
   it("GET - Teste listar pessoa pelo nome ", () => {
     cy.allure()
       .epic("Pessoa")
-      .feature("listar pessoa pelo nome")
+      .feature("consultar pessoa pelo nome")
       .story("Dados válidos");
     cy.adicionarPessoa(userPayload).then((pessoa) => {
       cy.listarPessoaPeloNome(pessoa.body.nome).should((response) => {
@@ -181,7 +181,7 @@ context("Pessoa", () => {
     const nome = "Shud12345";
     cy.allure()
       .epic("Pessoa")
-      .feature("listar pessoa")
+      .feature("consultar pessoa pelo nome")
       .story("Dados inválidos");
     cy.listarPessoaPeloNome(nome).should((response) => {
       expect(response.status).to.eq(200);
