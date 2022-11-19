@@ -1,0 +1,46 @@
+{
+  "type": "array",
+  "items": {
+      "type": "object",
+      "required": [
+          "idEndereco",
+          "tipo",
+          "logradouro",
+          "numero",
+          "complemento",
+          "cep",
+          "cidade",
+          "estado",
+          "pais"
+      ],
+      "properties": {
+          "idEndereco": {
+              "type": "integer"
+          },
+          "tipo": {
+              "type": "string"
+          },
+          "logradouro": {
+              "type": "string"
+          },
+          "numero": {
+              "type": "integer"
+          },
+          "complemento": {
+              "type": "null"
+          },
+          "cep": {
+              "type": "string"
+          },
+          "cidade": {
+              "type": "string"
+          },
+          "estado": {
+              "type": "string"
+          },
+          "pais": {
+              "type": "string"
+          }
+      }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "type": "array",
+  "items": {
+      "type": "object",
+      "required": [
+          "nome",
+          "dataNascimento",
+          "cpf",
+          "email",
+          "idPessoa",
+          "contatos",
+          "enderecos"
+      ],
+      "properties": {
+          "nome": {
+              "type": "string"
+          },
+          "dataNascimento": {
+              "type": "string"
+          },
+          "cpf": {
+              "type": "string"
+          },
+          "email": {
+              "type": "string"
+          },
+          "idPessoa": {
+              "type": "integer"
+          },
+          "contatos": {
+              "type": "array",
+              "items": {
+                  "type": "object",
+                  "required": [
+                      "idPessoa",
+                      "tipoContato",
+                      "telefone",
+                      "descricao",
+                      "idContato"
+                  ],
+                  "properties": {
+                      "idPessoa": {
+                          "type": "integer"
+                      },
+                      "tipoContato": {
+                          "type": "string"
+                      },
+                      "telefone": {
+                          "type": "string"
+                      },
+                      "descricao": {
+                          "type": "string"
+                      },
+                      "idContato": {
+                          "type": "integer"
+                      }
+                  }
+              }
+          },
+          "enderecos": {
+              "type": "array",
+              "items": {
+                  "type": "object",
+                  "required": [
+                      "idPessoa",
+                      "tipo",
+                      "logradouro",
+                      "numero",
+                      "complemento",
+                      "cep",
+                      "cidade",
+                      "estado",
+                      "pais",
+                      "idEndereco"
+                  ],
+                  "properties": {
+                      "idPessoa": {
+                          "type": "null"
+                      },
+                      "tipo": {
+                          "type": "string"
+                      },
+                      "logradouro": {
+                          "type": "string"
+                      },
+                      "numero": {
+                          "type": "integer"
+                      },
+                      "complemento": {
+                          "type": [
+                              "null",
+                              "string"
+                          ]
+                      },
+                      "cep": {
+                          "type": "string"
+                      },
+                      "cidade": {
+                          "type": "string"
+                      },
+                      "estado": {
+                          "type": "string"
+                      },
+                      "pais": {
+                          "type": "string"
+                      },
+                      "idEndereco": {
+                          "type": "integer"
+                      }
+                  }
+              }
+          }
+      }
+  }
+}

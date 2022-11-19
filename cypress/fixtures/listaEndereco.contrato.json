@@ -1,0 +1,47 @@
+{
+    "type": "object",
+    "required": [
+        "idPessoa",
+        "tipo",
+        "logradouro",
+        "numero",
+        "complemento",
+        "cep",
+        "cidade",
+        "estado",
+        "pais",
+        "idEndereco"
+    ],
+    "properties": {
+        "idPessoa": {
+            "type": "integer"
+        },
+        "tipo": {
+            "type": "string"
+        },
+        "logradouro": {
+            "type": "string"
+        },
+        "numero": {
+            "type": "integer"
+        },
+        "complemento": {
+            "type": "string"
+        },
+        "cep": {
+            "type": "string"
+        },
+        "cidade": {
+            "type": "string"
+        },
+        "estado": {
+            "type": "string"
+        },
+        "pais": {
+            "type": "string"
+        },
+        "idEndereco": {
+            "type": "integer"
+        }
+    }
+}

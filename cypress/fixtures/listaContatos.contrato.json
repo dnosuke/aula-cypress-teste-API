@@ -1,0 +1,61 @@
+{
+  "type": "array",
+  "items": {
+      "type": "object",
+      "required": [
+          "nome",
+          "dataNascimento",
+          "cpf",
+          "email",
+          "idPessoa",
+          "contatos"
+      ],
+      "properties": {
+          "nome": {
+              "type": "string"
+          },
+          "dataNascimento": {
+              "type": "string"
+          },
+          "cpf": {
+              "type": "string"
+          },
+          "email": {
+              "type": "string"
+          },
+          "idPessoa": {
+              "type": "integer"
+          },
+          "contatos": {
+              "type": "array",
+              "items": {
+                  "type": "object",
+                  "required": [
+                      "idPessoa",
+                      "tipoContato",
+                      "telefone",
+                      "descricao",
+                      "idContato"
+                  ],
+                  "properties": {
+                      "idPessoa": {
+                          "type": "integer"
+                      },
+                      "tipoContato": {
+                          "type": "string"
+                      },
+                      "telefone": {
+                          "type": "string"
+                      },
+                      "descricao": {
+                          "type": "string"
+                      },
+                      "idContato": {
+                          "type": "integer"
+                      }
+                  }
+              }
+          }
+      }
+  }
+}

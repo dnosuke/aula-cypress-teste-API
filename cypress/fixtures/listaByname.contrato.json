@@ -1,0 +1,30 @@
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": [
+            "nome",
+            "dataNascimento",
+            "cpf",
+            "email",
+            "idPessoa"
+        ],
+        "properties": {
+            "nome": {
+                "type": "string"
+            },
+            "dataNascimento": {
+                "type": "string"
+            },
+            "cpf": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            },
+            "idPessoa": {
+                "type": "integer"
+            }
+        }
+    }
+}
