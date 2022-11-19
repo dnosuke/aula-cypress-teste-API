@@ -1,7 +1,6 @@
 name: allure-report
 
-on:
-  push: [push]
+on: [push]
 
 jobs:
   allure:
