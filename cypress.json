@@ -1,3 +1,6 @@
 {
-  "projectId": "2v2t7z"
+  "projectId": "2v2t7z",
+  "env" : {
+    "API_BASE": "http://vemser-dbc.dbccompany.com.br:39000/vemser/dbc-pessoa-api/"
+}
 }
